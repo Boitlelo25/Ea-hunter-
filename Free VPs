@@ -1,0 +1,22 @@
+name: Windows-RDP
+
+on: workflow_dispatch
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Download Ngrok
+        run: |
+          Invoke-WebRequest https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-stable-windows-amd64.zip -OutFile ngrok.zip
+          Expand-Archive ngrok.zip
+
+      - name: Start RDP
+        run: |
+          net user runneradmin YourPassword123
+          net localgroup administrators runneradmin /add
+
+      - name: Start Ngrok
+        run: |
+          ./ngrok tcp 3389
