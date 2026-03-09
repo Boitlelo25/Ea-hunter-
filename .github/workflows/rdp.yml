@@ -7,10 +7,13 @@ jobs:
     runs-on: windows-latest
 
     steps:
-      - name: Enable RDP
+      - name: Setup RDP
         run: |
           net user runneradmin Password123
           net localgroup administrators runneradmin /add
 
-      - name: Keep Alive
-        run: ping -t localhost
+      - name: Keep Runner Alive
+        shell: powershell
+        run: |
+          Write-Host "Runner Active"
+          Start-Sleep -Seconds 21600
